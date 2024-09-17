@@ -1,3 +1,6 @@
+{% extends 'base.html' %}
+{% block content %}
+
 <h1>{{ aplikasi }}</h1>
 
 <h2>{{ slogan }}</h2>
@@ -9,3 +12,43 @@
 <p>{{ class }}<p>
 <h5>Deskripsi: </h2>
 <p>{{ deskripsi }}</p>
+
+{% if not park_entries %}
+<p>Belum ada data park pada Parking.</p>
+{% else %}
+<table>
+  <tr>
+    <th>Tempat</th>
+    <th>Waktu</th>
+    <th>Harga</th>
+    <th>Ketersediaan</th>
+    <th>Rating</th>
+    <th>Gambar</th>
+  </tr>
+
+  {% comment %} Berikut cara memperlihatkan data mood di bawah baris ini 
+  {% endcomment %} 
+  {% for park_entry in park_entries %}
+  <tr>
+    <td>{{park_entry.nama}}</td>
+    <td>{{park_entry.time}}</td>
+    <td>{{park_entry.price}}</td>
+    <td>{{park_entry.quantity}}</td>
+    <td>{{park_entry.rating}}</td>
+    <td>{{park_entry.image}}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% endif %}
+
+<br />
+
+<a href="{% url 'main:create_park_entry' %}">
+  <button>Tambah Tempat Parkir</button>
+<a href="{% url 'main:delete_all_entry' %}">
+  <button>Hapus Semua Data</button>
+</a>
+<a href="{% url 'main:delete_last_entry' %}">
+  <button>Hapus Data Terakhir</button>
+</a>
+{% endblock content %}
