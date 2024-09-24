@@ -21,156 +21,160 @@ drive: https://drive.google.com/drive/folders/1QfLorgwBiXcW8TZaz4_31kDszEZMH1G0?
    ```
 
 #### 4. Mengimplementasikan fungsi registrasi, login, dan logout untuk memungkinkan pengguna untuk mengakses aplikasi sebelumnya dengan lancar.
-    1. implementasi fungsi registrasi
-        1. pertama tama saya jalankan virtual environment terlebih dahulu di cmd direktori saya
-            ```cmd
-            env\Scripts\activate.bat
-            ```
-        2. saya tambahkan import redirect, UserCreationForm, dan messages pada bagian paling atas pada views.py.
-            ```python
-            from django.shortcuts import redirect
-            from django.contrib.auth.forms import UserCreationForm
-            from django.contrib import messages  
-            ```
-        3. saya tambahkan potongan kode di bawah ini ke dalam fungsi register yang sudah saya buat sebelumnya. Potongan kode ini berfungsi untuk menghasilkan formulir registrasi secara otomatis dan menghasilkan akun pengguna ketika data di-submit dari form.
-            ```python
-            def register(request):
-                form = UserCreationForm()
 
-                if request.method == "POST":
-                    form = UserCreationForm(request.POST)
-                    if form.is_valid():
-                        form.save()
-                        messages.success(request, 'Your account has been successfully created!')
-                        return redirect('main:login')
-                context = {'form':form}
-                return render(request, 'register.html', context)
-            ```
-        4. saya buat berkas HTML baru dengan nama register.html pada folder main/templates. Isi dari register.html saya isi dengan template berikut.
-            ```html
-            {% extends 'base.html' %}
+1. **Implementasi fungsi registrasi:**
 
-            {% block meta %}
-                <title>Register</title>
-            {% endblock meta %}
+    1. Pertama-tama saya jalankan virtual environment terlebih dahulu di cmd direktori saya:
+    
+        ```cmd
+        env\Scripts\activate.bat
+        ```
+    
+    2. Saya tambahkan import `redirect`, `UserCreationForm`, dan `messages` pada bagian paling atas pada `views.py`:
+    
+        ```python
+        from django.shortcuts import redirect
+        from django.contrib.auth.forms import UserCreationForm
+        from django.contrib import messages  
+        ```
+    
+    3. Saya tambahkan potongan kode berikut ke dalam fungsi `register`:
+    
+        ```python
+        def register(request):
+            form = UserCreationForm()
+    
+            if request.method == "POST":
+                form = UserCreationForm(request.POST)
+                if form.is_valid():
+                    form.save()
+                    messages.success(request, 'Your account has been successfully created!')
+                    return redirect('main:login')
+            context = {'form': form}
+            return render(request, 'register.html', context)
+        ```
+    
+    4. Saya membuat file HTML baru dengan nama `register.html` di folder `main/templates`:
+    
+        ```html
+        {% extends 'base.html' %}
 
-            {% block content %}  
+        {% block meta %}
+            <title>Register</title>
+        {% endblock meta %}
 
-            <div class = "login">
-                
-                <h1>Register</h1>  
+        {% block content %}
+        <div class="login">
+            <h1>Register</h1>
+            <form method="POST">  
+                {% csrf_token %}
+                <table>
+                    {{ form.as_table }}
+                    <tr>
+                        <td></td>
+                        <td><input type="submit" name="submit" value="Daftar" /></td>
+                    </tr>
+                </table>
+            </form>
+            {% if messages %}
+                <ul>
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+        {% endblock content %}
+        ```
 
-                    <form method="POST" >  
-                        {% csrf_token %}  
-                        <table>  
-                            {{ form.as_table }}  
-                            <tr>  
-                                <td></td>
-                                <td><input type="submit" name="submit" value="Daftar"/></td>  
-                            </tr>  
-                        </table>  
-                    </form>
-
-                {% if messages %}  
-                    <ul>   
-                        {% for message in messages %}  
-                            <li>{{ message }}</li>  
-                            {% endfor %}  
-                    </ul>   
-                {% endif %}
-
-            </div>  
-
-            {% endblock content %}
-            ```
-        5. saya lakukan routing di urls.py dengan menulis
-            ```python
-            from main.views import register
-            ```
-        6. dan saya tambahkan path url ke urlpatterns untuk mengakses fungsi saya
-            ```python
+    5. Saya tambahkan path routing di `urls.py`:
+    
+        ```python
+        from main.views import register
+        
+        urlpatterns = [
             ...
             path('register/', register, name='register'),
             ...
-            
-    2. implementasi fungsi login
-        1. saya tambahkan import authenticate dan login pada bagian paling atas pada views.py
-            ```python
-            from django.contrib.auth import authenticate, login
-            ```
-        2. saya tambahkan potongan kode di bawah ini ke dalam fungsi login yang sudah saya buat sebelumnya. Potongan kode ini berfungsi untuk mengautentikasi pengguna yang ingin login.
-            ```python
-            def login_user(request):
-                if request.method == 'POST':
-                    username = request.POST.get('username')
-                    password = request.POST.get('password')
-                    user = authenticate(request, username=username, password=password)
-                    if user is not None:
-                        login(request, user)
-                        return redirect('main:show_main')
-                    else:
-                        messages.info(request, 'Sorry, incorrect username or password. Please try again.')
-                context = {}
-                return render(request, 'login.html', context)
-            ```
-        3. saya buat berkas HTML baru dengan nama login.html pada folder main/templates. Isi dari login.html saya isi dengan template berikut
-            ```html
-            {% extends 'base.html' %}
+        ]
+        ```
 
-            {% block meta %}
-                <title>Login</title>
-            {% endblock meta %}
+2. **Implementasi fungsi login:**
 
-            {% block content %}
+    1. Saya tambahkan import `authenticate` dan `login`:
+    
+        ```python
+        from django.contrib.auth import authenticate, login
+        ```
+    2. Saya tambahkan potongan kode berikut ke dalam fungsi `login_user`:
+    
+        ```python
+        def login_user(request):
+            if request.method == 'POST':
+                username = request.POST.get('username')
+                password = request.POST.get('password')
+                user = authenticate(request, username=username, password=password)
+                if user is not None:
+                    login(request, user)
+                    return redirect('main:show_main')
+                else:
+                    messages.info(request, 'Sorry, incorrect username or password.')
+            context = {}
+            return render(request, 'login.html', context)
+        ```
 
-            <div class = "login">
+    3. Saya buat file HTML baru `login.html` di folder `main/templates`:
+    
+        ```html
+        {% extends 'base.html' %}
 
-                <h1>Login</h1>
+        {% block meta %}
+            <title>Login</title>
+        {% endblock meta %}
 
-                <form method="POST" action="">
-                    {% csrf_token %}
-                    <table>
-                        <tr>
-                            <td>Username: </td>
-                            <td><input type="text" name="username" placeholder="Username" class="form-control"></td>
-                        </tr>
-                                
-                        <tr>
-                            <td>Password: </td>
-                            <td><input type="password" name="password" placeholder="Password" class="form-control"></td>
-                        </tr>
+        {% block content %}
+        <div class="login">
+            <h1>Login</h1>
+            <form method="POST" action="">
+                {% csrf_token %}
+                <table>
+                    <tr>
+                        <td>Username: </td>
+                        <td><input type="text" name="username" placeholder="Username" class="form-control"></td>
+                    </tr>
+                    <tr>
+                        <td>Password: </td>
+                        <td><input type="password" name="password" placeholder="Password" class="form-control"></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><input class="btn login_btn" type="submit" value="Login"></td>
+                    </tr>
+                </table>
+            </form>
+            {% if messages %}
+                <ul>
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            Don't have an account yet? <a href="{% url 'main:register' %}">Register Now</a>
+        </div>
+        {% endblock content %}
+        ```
 
-                        <tr>
-                            <td></td>
-                            <td><input class="btn login_btn" type="submit" value="Login"></td>
-                        </tr>
-                    </table>
-                </form>
-
-                {% if messages %}
-                    <ul>
-                        {% for message in messages %}
-                            <li>{{ message }}</li>
-                        {% endfor %}
-                    </ul>
-                {% endif %}     
-                    
-                Don't have an account yet? <a href="{% url 'main:register' %}">Register Now</a>
-
-            </div>
-
-            {% endblock content %}
-            ```
-        4. saya lakukan routing di urls.py dengan menulis
-            ```python
-            from main.views import login_user
-            ```
-        5. dan saya tambahkan path url ke urlpatterns untuk mengakses fungsi saya
-            ```python
+    4. Saya tambahkan path routing di `urls.py`:
+    
+        ```python
+        from main.views import login_user
+        
+        urlpatterns = [
             ...
             path('login/', login_user, name='login'),
             ...
-            ```
+        ]
+        ```
 
             
     3. implementasi fungsi logout
