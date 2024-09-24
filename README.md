@@ -18,6 +18,7 @@ drive: https://drive.google.com/drive/folders/1QfLorgwBiXcW8TZaz4_31kDszEZMH1G0?
    ```python
    class Product(models.Model):
      user = models.ForeignKey(User, on_delete=models.CASCADE)
+   ```
 #### 3. Perbedaan antara authentication dan authorization, apakah yang dilakukan saat pengguna login
     Autentikasi dan otorisasi adalah dua komponen penting dalam sistem keamanan aplikasi web, termasuk Django.
 
