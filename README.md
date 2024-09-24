@@ -207,10 +207,12 @@ drive: https://drive.google.com/drive/folders/1QfLorgwBiXcW8TZaz4_31kDszEZMH1G0?
     ```python
     context = {
         'name': request.user.username,
-        'class': 'PBP E', 
-        'items': items,
-        'jumlah_item' : jumlah_item,
-        'last_login': request.COOKIES['last_login']
+        'class': 'PBP F',
+        'aplikasi': 'ParKing',
+        'slogan': 'Rule Your Parking Experience',
+        'deskripsi': 'aplikasi review dan live-update kondisi ketersediaan tempat parkir beserta harganya',
+        'park_entries': park_entries,
+        'last_login': request.COOKIES['last_login'],
     }
     ```
     - saya mengubah fungsi logout_user menjadi seperti potongan kode berikut
@@ -228,7 +230,7 @@ drive: https://drive.google.com/drive/folders/1QfLorgwBiXcW8TZaz4_31kDszEZMH1G0?
     ...
     ```
     
-5. Menghubungkan model Item dengan User
+5. Menghubungkan model Product dengan User
     - saya buka models.py yang ada pada subdirektori main dan tambahkan kode berikut pada dibawah kode untuk mengimpor model:
     ```python
     ...
@@ -237,24 +239,23 @@ drive: https://drive.google.com/drive/folders/1QfLorgwBiXcW8TZaz4_31kDszEZMH1G0?
     ```
     - Pada model Product yang sudah dibuat, saya tambahkan potongan kode berikut
     ```python
-    class Item(models.Model):
+    class Product(models.Model):
         user = models.ForeignKey(User, on_delete=models.CASCADE)
         ...
     ```
     - saya buka views.py yang ada pada subdirektori main, dan ubah potongan kode pada fungsi create_product menjadi sebagai berikut:
     ```python
-    form = ItemForm(request.POST or None)
+    form = ParKingEntryForm(request.POST or None, request.FILES)
 
     if form.is_valid() and request.method == "POST":
-     item = form.save(commit=False)
-     item.user = request.user
-     item.save()
-     return HttpResponseRedirect(reverse('main:show_main'))
+        park_entry = form.save(commit=False)
+        park_entry.user = request.user
+        park_entry.save()
+        return redirect('main:show_main')
     ```
     - saya ubah fungsi show_main menjadi sebagai berikut
     ```python
-    items = Item.objects.filter(user=request.user)
-    jumlah_item = Item.objects.filter(user=request.user).count()
+    park_entries = Product.objects.filter(user=request.user)
 
     context = {
         'name': request.user.username,
@@ -269,6 +270,6 @@ drive: https://drive.google.com/drive/folders/1QfLorgwBiXcW8TZaz4_31kDszEZMH1G0?
     ```cmd
     python manage.py runserver
     ```
-    - kemudian saya buat akun disana ronsipembeli dan ronsipenjual 
+    - kemudian saya buat akun disana
     - kemudian saya login ke akun pertama dan menambahkan 3 data
     - terakhir saya login ke akun kedua dan menambahkan 3 data
