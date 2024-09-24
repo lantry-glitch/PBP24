@@ -4,7 +4,7 @@ untuk jawaban dari beberapa pertanyaan berikut terlampir link gdrive ini
 drive: https://drive.google.com/drive/folders/1QfLorgwBiXcW8TZaz4_31kDszEZMH1G0?usp=drive_link
 
 ## Tugas 4
-1. Perbedaan antara `HttpResponseRedirect()` dan `redirect()`
+#### 1. Perbedaan antara `HttpResponseRedirect()` dan `redirect()`
   `HttpResponseRedirect()` hanya bisa digunakan jika kita ingin melakukan pengalihan manual ke URL tertentu. misalnya
    ```python
    from django.http import HttpResponseRedirect
@@ -12,17 +12,23 @@ drive: https://drive.google.com/drive/folders/1QfLorgwBiXcW8TZaz4_31kDszEZMH1G0?
    ```
    sedangkan `redirect()` fungsi bawaan Django yang lebih "high-level" yang dapat menerima URL lengkap, nama view, dan nama URL pattern sebagai argumen. `redirect()` juga dapat menerima argumen tambahan seperti `args` dan `kwargs`. Sehingga, `redirect()` lebih fleksibel dan dapat digunakan dalam berbagai kasus.
 
-
-2. Cara kerja penghubungan model Product dengan User!
+#### 2. Cara kerja penghubungan model Product dengan User!
    Model `Product` dan `User` dapat dihubungkan menggunakan relasi `ForeignKey`. Relasi `ForeignKey` memungkinkan satu model untuk memiliki banyak model lainnya. Dengan menggunakan relasi `ForeignKey`,
    model `Product` dapat memiliki relasi dengan model `User`.
    ```python
    class Product(models.Model):
      user = models.ForeignKey(User, on_delete=models.CASCADE)
    ```
+#### 3. Perbedaan antara authentication dan authorization, apakah yang dilakukan saat pengguna login
+    Autentikasi dan otorisasi adalah dua komponen penting dalam sistem keamanan aplikasi web, termasuk Django.
 
-   
-4. Mengimplementasikan fungsi registrasi, login, dan logout untuk memungkinkan pengguna untuk mengakses aplikasi sebelumnya dengan lancar.
+    **Autentikasi** adalah proses verifikasi identitas pengguna. Dalam konteks Django, ini berarti memverifikasi bahwa pengguna adalah siapa yang mereka klaim. Misalnya, ketika pengguna mencoba masuk, sistem akan memeriksa apakah kombinasi nama pengguna dan kata sandi yang diberikan cocok dengan apa yang ada di database.
+
+    **Otorisasi**, di sisi lain, menentukan apa yang diizinkan pengguna lakukan setelah mereka berhasil melewati proses autentikasi. Ini bisa berarti memeriksa apakah pengguna memiliki izin untuk mengakses halaman tertentu, atau apakah mereka diizinkan untuk melakukan tindakan tertentu (seperti mengedit atau menghapus entri database).
+
+    Kedua komponen ini penting karena mereka membantu menjaga keamanan aplikasi Anda. Autentikasi membantu mencegah akses yang tidak sah ke akun pengguna, sementara otorisasi membantu mencegah pengguna melakukan tindakan yang tidak seharusnya mereka lakukan, yang bisa merusak integritas data Anda atau merusak pengalaman pengguna lain.
+
+#### 4. Mengimplementasikan fungsi registrasi, login, dan logout untuk memungkinkan pengguna untuk mengakses aplikasi sebelumnya dengan lancar.
     1. implementasi fungsi registrasi
         1. pertama tama saya jalankan virtual environment terlebih dahulu di cmd direktori saya
             ```cmd
