@@ -12,13 +12,15 @@ drive: https://drive.google.com/drive/folders/1QfLorgwBiXcW8TZaz4_31kDszEZMH1G0?
    ```
    sedangkan `redirect()` fungsi bawaan Django yang lebih "high-level" yang dapat menerima URL lengkap, nama view, dan nama URL pattern sebagai argumen. `redirect()` juga dapat menerima argumen tambahan seperti `args` dan `kwargs`. Sehingga, `redirect()` lebih fleksibel dan dapat digunakan dalam berbagai kasus.
 
-2. cara kerja penghubungan model Product dengan User!
+
+2. Cara kerja penghubungan model Product dengan User!
    Model `Product` dan `User` dapat dihubungkan menggunakan relasi `ForeignKey`. Relasi `ForeignKey` memungkinkan satu model untuk memiliki banyak model lainnya. Dengan menggunakan relasi `ForeignKey`,
    model `Product` dapat memiliki relasi dengan model `User`.
    ```python
    class Product(models.Model):
      user = models.ForeignKey(User, on_delete=models.CASCADE)
    ```
+
    
 4. Mengimplementasikan fungsi registrasi, login, dan logout untuk memungkinkan pengguna untuk mengakses aplikasi sebelumnya dengan lancar.
     1. implementasi fungsi registrasi
