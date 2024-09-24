@@ -19,10 +19,8 @@ drive: https://drive.google.com/drive/folders/1QfLorgwBiXcW8TZaz4_31kDszEZMH1G0?
    class Product(models.Model):
      user = models.ForeignKey(User, on_delete=models.CASCADE)
    ```
-s
 
 #### 4. Mengimplementasikan fungsi registrasi, login, dan logout untuk memungkinkan pengguna untuk mengakses aplikasi sebelumnya dengan lancar.
-    ```
     1. implementasi fungsi registrasi
         1. pertama tama saya jalankan virtual environment terlebih dahulu di cmd direktori saya
             ```cmd
