@@ -170,7 +170,8 @@ drive: https://drive.google.com/drive/folders/1QfLorgwBiXcW8TZaz4_31kDszEZMH1G0?
             ...
             path('login/', login_user, name='login'),
             ...
-            ```
+
+            
     3. implementasi fungsi logout
         1. saya tambahkan import logout pada bagian paling atas pada views.py
             ```python
