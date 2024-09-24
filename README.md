@@ -21,13 +21,7 @@ drive: https://drive.google.com/drive/folders/1QfLorgwBiXcW8TZaz4_31kDszEZMH1G0?
    ```
 
 #### 3. Perbedaan antara authentication dan authorization, apakah yang dilakukan saat pengguna login
-    Autentikasi dan otorisasi adalah dua komponen penting dalam sistem keamanan aplikasi web, termasuk Django.
-    
-    Autentikasi adalah proses verifikasi identitas pengguna. Dalam konteks Django, ini berarti memverifikasi bahwa pengguna adalah siapa yang mereka klaim. Misalnya, ketika pengguna mencoba masuk, sistem akan memeriksa apakah kombinasi nama pengguna dan kata sandi yang diberikan cocok dengan apa yang ada di database.
-
-    Otorisasi, di sisi lain, menentukan apa yang diizinkan pengguna lakukan setelah mereka berhasil melewati proses autentikasi. Ini bisa berarti memeriksa apakah pengguna memiliki izin untuk mengakses halaman tertentu, atau apakah mereka diizinkan untuk melakukan tindakan tertentu (seperti mengedit atau menghapus entri database).
-
-    Kedua komponen ini penting karena mereka membantu menjaga keamanan aplikasi Anda. Autentikasi membantu mencegah akses yang tidak sah ke akun pengguna, sementara otorisasi membantu mencegah pengguna melakukan tindakan yang tidak seharusnya mereka lakukan, yang bisa merusak integritas data Anda atau merusak pengalaman pengguna lain.
+    Autentikasi dan otorisasi adalah dua komponen penting dalam sistem keamanan aplikasi web, termasuk Django. Autentikasi adalah proses verifikasi identitas pengguna. Dalam konteks Django, ini berarti memverifikasi bahwa pengguna adalah siapa yang mereka klaim. Misalnya, ketika pengguna mencoba masuk, sistem akan memeriksa apakah kombinasi nama pengguna dan kata sandi yang diberikan cocok dengan apa yang ada di database. Otorisasi, di sisi lain, menentukan apa yang diizinkan pengguna lakukan setelah mereka berhasil melewati proses autentikasi. Ini bisa berarti memeriksa apakah pengguna memiliki izin untuk mengakses halaman tertentu, atau apakah mereka diizinkan untuk melakukan tindakan tertentu (seperti mengedit atau menghapus entri database). Kedua komponen ini penting karena mereka membantu menjaga keamanan aplikasi Anda. Autentikasi membantu mencegah akses yang tidak sah ke akun pengguna, sementara otorisasi membantu mencegah pengguna melakukan tindakan yang tidak seharusnya mereka lakukan, yang bisa merusak integritas data Anda atau merusak pengalaman pengguna lain.
 
 #### 4. Mengimplementasikan fungsi registrasi, login, dan logout untuk memungkinkan pengguna untuk mengakses aplikasi sebelumnya dengan lancar.
     1. implementasi fungsi registrasi
