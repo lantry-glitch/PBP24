@@ -92,7 +92,7 @@ drive: https://drive.google.com/drive/folders/1QfLorgwBiXcW8TZaz4_31kDszEZMH1G0?
             ...
             path('register/', register, name='register'),
             ...
-            ```
+            
     2. implementasi fungsi login
         1. saya tambahkan import authenticate dan login pada bagian paling atas pada views.py
             ```python
@@ -170,6 +170,7 @@ drive: https://drive.google.com/drive/folders/1QfLorgwBiXcW8TZaz4_31kDszEZMH1G0?
             ...
             path('login/', login_user, name='login'),
             ...
+            ```
 
             
     3. implementasi fungsi logout
