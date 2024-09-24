@@ -302,7 +302,7 @@ drive: https://drive.google.com/drive/folders/1QfLorgwBiXcW8TZaz4_31kDszEZMH1G0?
     python manage.py runserver
     ```
     - kemudian saya buat akun disana
-    - kemudian saya login ke akun pertama dan menambahkan 3 data
+    - kemudian saya login ke akun pertama dan menambahkan 4 data
    ![image](https://github.com/user-attachments/assets/996c3e5b-7abe-4c64-8237-65494cb8a174)
 
     - terakhir saya login ke akun kedua dan menambahkan 3 data
