@@ -303,4 +303,7 @@ drive: https://drive.google.com/drive/folders/1QfLorgwBiXcW8TZaz4_31kDszEZMH1G0?
     ```
     - kemudian saya buat akun disana
     - kemudian saya login ke akun pertama dan menambahkan 3 data
+   ![image](https://github.com/user-attachments/assets/996c3e5b-7abe-4c64-8237-65494cb8a174)
+
     - terakhir saya login ke akun kedua dan menambahkan 3 data
+   ![image](https://github.com/user-attachments/assets/61eb270c-dee8-454e-97f2-c6077cb8f63e)
