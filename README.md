@@ -4,9 +4,14 @@ untuk jawaban dari beberapa pertanyaan berikut terlampir link gdrive ini
 drive: https://drive.google.com/drive/folders/1QfLorgwBiXcW8TZaz4_31kDszEZMH1G0?usp=drive_link
 
 ## Tugas 4
-1. Perbedaan antara `HttpResponseRedirect()` dan redirect()
+1. Perbedaan antara `HttpResponseRedirect()` dan `redirect()`
+  `HttpResponseRedirect()` hanya bisa digunakan jika kita ingin melakukan pengalihan manual ke URL tertentu. misalnya
+   ```python
+   from django.http import HttpResponseRedirect
+      return HttpResponseRedirect('/some-url/')
+   ```
    
-2. Mengimplementasikan fungsi registrasi, login, dan logout untuk memungkinkan pengguna untuk mengakses aplikasi sebelumnya dengan lancar.
+3. Mengimplementasikan fungsi registrasi, login, dan logout untuk memungkinkan pengguna untuk mengakses aplikasi sebelumnya dengan lancar.
     1. implementasi fungsi registrasi
         1. pertama tama saya jalankan virtual environment terlebih dahulu di cmd direktori saya
             ```cmd
