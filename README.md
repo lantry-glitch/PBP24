@@ -56,10 +56,83 @@ contoh:
 ```
 
 ### 4. Jelaskan konsep flex box dan grid layout beserta kegunaannya!
+1. Flexbox
+Definisi: Flexbox adalah metode layout satu dimensi, yang dirancang untuk mengatur elemen dalam satu baris (row) atau satu kolom (column). Flexbox sangat berguna ketika elemen-elemen perlu didistribusikan secara fleksibel dan responsif di sepanjang satu sumbu utama.
+
+Kelebihan:
+1. Fleksibel dan mudah diatur: Flexbox secara otomatis mengatur ukuran elemen anak berdasarkan ruang yang tersedia.
+2. Penyelarasan (alignment): Mudah mengatur penyelarasan elemen secara horizontal dan vertikal.
+3. Responsif: Elemen dapat mengubah ukuran dan posisi sesuai dengan ukuran kontainer induk.
+Sederhana untuk layout satu dimensi: Sempurna untuk tata letak baris atau kolom tunggal (horizontal atau vertikal).
+Kekurangan:
+1. Satu dimensi: Flexbox hanya mengatur elemen dalam satu dimensi (baris atau kolom), sehingga kurang efisien untuk layout yang kompleks dalam dua dimensi (seperti baris dan kolom sekaligus).
+2. Kurang cocok untuk layout kompleks: Untuk tata letak yang melibatkan banyak baris dan kolom yang saling berhubungan, Grid Layout lebih baik.
+
+contoh penggunaan:
+```html
+<div class="flex-container">
+    <div class="item">Item 1</div>
+    <div class="item">Item 2</div>
+    <div class="item">Item 3</div>
+</div>
+
+<style>
+  .flex-container {
+      display: flex;
+      justify-content: space-around; /* Distribusi elemen secara merata */
+      align-items: center; /* Vertikal centering */
+      height: 200px;
+      border: 2px solid black;
+  }
+  
+  .item {
+      background-color: lightblue;
+      padding: 20px;
+  }
+</style>
+```
+
+2. Grid layput
+Definisi: Grid Layout adalah sistem layout dua dimensi, yang memungkinkan pengaturan elemen dalam baris dan kolom secara bersamaan. Ini adalah cara yang sangat kuat untuk membuat tata letak web yang kompleks.
+
+Kelebihan:
+1. Dua dimensi: Dapat mengatur elemen dalam baris dan kolom sekaligus, memungkinkan tata letak yang lebih kompleks.
+2. Kontrol presisi: Kita dapat mengontrol secara rinci posisi elemen di grid dengan menggunakan garis dan area grid.
+3. Fleksibilitas tinggi untuk layout kompleks: Sempurna untuk desain layout yang lebih rumit seperti halaman majalah, dashboard, atau tampilan kartu (cards).
+Kekurangan:
+1. Lebih kompleks: Memerlukan lebih banyak pengetahuan untuk memanfaatkan sepenuhnya fitur Grid.
+2. Lebih cocok untuk tata letak tetap: Walaupun Grid bisa responsif, sering kali lebih efektif untuk layout yang kurang berubah-ubah dibanding Flexbox.
+```html
+<div class="grid-container">
+    <div class="item1">Header</div>
+    <div class="item2">Sidebar</div>
+    <div class="item3">Content</div>
+    <div class="item4">Footer</div>
+</div>
+
+<style>
+  .grid-container {
+      display: grid;
+      grid-template-columns: 1fr 3fr; /* Membuat 2 kolom, sidebar lebih kecil */
+      grid-template-rows: auto auto auto; /* 3 baris otomatis berdasarkan konten */
+      gap: 10px; /* Jarak antar elemen */
+  }
+  
+  .item1 { grid-column: 1 / 3; } /* Header di atas dua kolom */
+  .item4 { grid-column: 1 / 3; } /* Footer di bawah dua kolom */
+  
+  .item1, .item2, .item3, .item4 {
+      background-color: lightgreen;
+      padding: 20px;
+      text-align: center;
+  }
+</style>
+
+```
 
 
 ### 5. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial)!
-  1. **1. Mengimplementasi fungsi mengedit dan menghapus produk dengan menambahkan fungsi tersebut pada `views.py`.**
+  1. **Mengimplementasi fungsi mengedit dan menghapus produk dengan menambahkan fungsi tersebut pada `views.py`.**
      Membuat function-function yang berfungsi sebagai logika mengedit dan menghapus objek produk
      ```pyhton
      def edit_park(request, id):
