@@ -5,28 +5,128 @@
 {% endblock meta %}
 
 {% block content %}
-<div class="login">
-  <h1>Login</h1>
+<div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8" style="background: linear-gradient(135deg, #d3d3d3, #747474); font-family: 'Roboto', sans-serif;">
+  <div class="max-w-md w-full space-y-8">
+    <div>
+      <h1 id="main-title" class="mt-6 text-center text-4xl font-extrabold" style="color:#080808; min-height: 1.5em;">
+        Parking
+      </h1>
+      <h2 class="mt-4 text-center text-3xl font-extrabold" style="color:#080808;">
+        Login to your account
+      </h2>
+    </div>
+    <form class="mt-8 space-y-6" method="POST" action="">
+      {% csrf_token %}
+      <input type="hidden" name="remember" value="true">
+      <div class="rounded-md shadow-sm -space-y-px">
+        <div>
+          <label for="username" class="sr-only">Username</label>
+          <input id="username" name="username" type="text" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Username">
+        </div>
+        <div>
+          <label for="password" class="sr-only">Password</label>
+          <input id="password" name="password" type="password" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Password">
+        </div>
+      </div>
 
-  <form method="POST" action="">
-    {% csrf_token %}
-    <table>
-      {{ form.as_table }}
-      <tr>
-        <td></td>
-        <td><input class="btn login_btn" type="submit" value="Login" /></td>
-      </tr>
-    </table>
-  </form>
+      <div>
+        <button type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md" style="background-color:#747474; color:#ffffff;">
+          Sign in
+        </button>
+      </div>
+    </form>
 
-  {% if messages %}
-  <ul>
-    {% for message in messages %}
-    <li>{{ message }}</li>
-    {% endfor %}
-  </ul>
-  {% endif %} Don't have an account yet?
-  <a href="{% url 'main:register' %}">Register Now</a>
+    {% if messages %}
+    <div class="mt-4">
+      {% for message in messages %}
+      {% if message.tags == "success" %}
+            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
+                <span class="block sm:inline">{{ message }}</span>
+            </div>
+        {% elif message.tags == "error" %}
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                <span class="block sm:inline">{{ message }}</span>
+            </div>
+        {% else %}
+            <div class="bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded relative" role="alert">
+                <span class="block sm:inline">{{ message }}</span>
+            </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="text-center mt-4">
+      <p class="text-sm" style="color: #080808;">
+        Don't have an account yet?
+        <a href="{% url 'main:register' %}" style="color: #080808;" class="font-medium hover:text-#747474">
+          Register Now
+        </a>
+      </p>
+    </div>
+  </div>
 </div>
 
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const mainTitle = document.getElementById('main-title');
+    const typingText = "Rule Your Parking"; // Teks untuk ditulis
+    const parkingText = "ParKing"; // Teks untuk kembali
+    const typingSpeed = 100; // Kecepatan ketikan dalam milidetik
+    const pauseTime = 2000; // Waktu tunggu setelah selesai mengetik
+    const deleteSpeed = 50; // Kecepatan menghapus dalam milidetik
+
+    // Fungsi untuk mengetik teks
+    function typeText(text, index, callback) {
+      if (index < text.length) {
+        mainTitle.textContent = text.substring(0, index + 1);
+        setTimeout(() => typeText(text, index + 1, callback), typingSpeed);
+      } else {
+        setTimeout(callback, pauseTime);
+      }
+    }
+
+    function typeText2(text, index, callback) {
+      if (index < text.length) {
+        mainTitle.textContent = text.substring(0, index + 1);
+        setTimeout(() => typeText2(text, index + 1, callback), typingSpeed*3);
+      } else {
+        setTimeout(callback, pauseTime*5);
+      }
+    }
+
+    // Fungsi untuk menghapus teks
+    function deleteText(text, index, callback) {
+      if (index >= 0) {
+        mainTitle.textContent = text.substring(0, index);
+        setTimeout(() => deleteText(text, index - 1, callback), deleteSpeed);
+      } else {
+        setTimeout(callback, pauseTime);
+      }
+    }
+
+    function deleteText2(text, index, callback) {
+      if (index >= 0) {
+        mainTitle.textContent = text.substring(0, index);
+        setTimeout(() => deleteText2(text, index - 1, callback), deleteSpeed);
+      } else {
+        setTimeout(callback, pauseTime);
+      }
+    }
+
+    // Fungsi utama untuk menjalankan siklus
+    function runTextCycle() {
+      typeText(typingText, 0, () => {
+        deleteText(typingText, typingText.length - 1, () => {
+          typeText2(parkingText, 0, () => {
+            deleteText2(parkingText, parkingText.length - 1, runTextCycle); // Ulangi siklus
+          });
+        });
+      });
+    }
+
+    // Mulai siklus
+    runTextCycle();
+  });
+</script>
 {% endblock content %}

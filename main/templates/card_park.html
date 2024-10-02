@@ -1,0 +1,43 @@
+<div class="relative break-inside-avoid">
+  <div class="relative top-5 bg-[#d3d3d3] shadow-lg rounded-lg mb-6 break-inside-avoid flex flex-col border-4 border-[#080808]">
+    <div class="bg-[#080808] text-[#d3d3d3] p-4 rounded-t-lg">
+      <h3 class="font-bold text-2xl mb-2">{{ park_entry.nama }}</h3>
+      <p class="text-[#d3d3d3] text-sm">{{ park_entry.time }}</p>
+    </div>
+    <div class="p-4">
+      <p class="font-semibold text-lg text-[#080808] mb-2">Tempat Parkir</p> 
+      <p class="text-[#6c6c6c] mb-2">{{ park_entry.feelings }}</p>
+
+      <!-- Menampilkan harga dan jumlah -->
+      <p class="text-[#080808] font-semibold mb-2">Harga: Rp. {{ park_entry.price }}</p>
+      <p class="text-[#080808] font-semibold mb-2">Jumlah: {{ park_entry.quantity }}</p>
+      
+      <!-- Menampilkan deskripsi -->
+      <p class="text-[#6c6c6c] mb-2">{{ park_entry.description }}</p>
+
+      <div class="mt-4">
+        <p class="text-[#080808] font-semibold mb-2">Rating</p>
+        <div class="relative pt-1">
+          <div class="flex mb-2 items-center justify-between">
+            <div>
+              <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-[#080808] bg-[#d3d3d3]">
+                {% if park_entry.rating > 10 %}10+{% else %}{{ park_entry.rating }}{% endif %}
+              </span>
+            </div>
+          </div>
+          <div class="overflow-hidden h-2 mb-4 text-xs flex rounded bg-[#6c6c6c]">
+            <div style="width:{% if park_entry.rating >= 5 %}100{% else %}{{ park_entry.rating|floatformat:2 }}0{% endif %}%" class="bg-[#080808]"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="absolute top-0 -right-4 flex space-x-1">
+    <a href="{% url 'main:edit_park' park_entry.pk %}" class="bg-[#6c6c6c] hover:bg-[#080808] text-[#d3d3d3] rounded-full p-2 transition duration-300 shadow-md">
+      &#9998; <!-- Simbol untuk Edit -->
+    </a>
+    <a href="{% url 'main:delete_park' park_entry.pk %}" class="bg-[#d3d3d3] hover:bg-[#747474] text-[#080808] rounded-full p-2 transition duration-300 shadow-md">
+      &#10006; <!-- Simbol untuk Delete -->
+    </a>
+  </div>
+</div>

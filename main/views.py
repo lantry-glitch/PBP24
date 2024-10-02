@@ -40,6 +40,21 @@ def create_park_entry(request):
     context = {'form': form}
     return render(request, "create_park_entry.html", context)
 
+def edit_park(request, id):
+    # Get mood entry berdasarkan id
+    park = Product.objects.get(pk = id)
+
+    # Set mood entry sebagai instance dari form
+    form = ParKingEntryForm(request.POST or None, instance=park)
+
+    if form.is_valid() and request.method == "POST":
+        # Simpan form dan kembali ke halaman awal
+        form.save()
+        return HttpResponseRedirect(reverse('main:show_main'))
+
+    context = {'form': form}
+    return render(request, "edit_park.html", context)
+
 def delete_all_entry(request):
     for product in Product.objects.all():
         if product.image:
@@ -53,6 +68,14 @@ def delete_last_entry(request):
     if last_data.image:
             last_data.image.delete(save=False)
     return redirect("main:show_main")
+
+def delete_park(request, id):
+    # Get mood berdasarkan id
+    park = Product.objects.get(pk = id)
+    # Hapus mood
+    park.delete()
+    # Kembali ke halaman awal
+    return HttpResponseRedirect(reverse('main:show_main'))
 
 def show_xml(request):
     data = Product.objects.all()

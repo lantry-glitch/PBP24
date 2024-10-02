@@ -1,59 +1,39 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
+{% include 'navbar.html' %}
 
-<h1>{{ aplikasi }}</h1>
+<div class="overflow-x-hidden sm:px-2 px-4 md:px-8 pb-8 pt-24 min-h-screen bg-gray-100 flex flex-col">
+<div class="container mx-auto py-12 mt-16">
+  <h1 class="text-4xl font-bold text-center mb-4" style="color:#080808;">{{ aplikasi }}</h1>
+  <h2 class="text-2xl font-semibold text-center mb-8" style="color:#747474;">{{ slogan }}</h2>
 
-<h2>{{ slogan }}</h2>
-<h5>NPM: </h5>
-<p>{{ npm }}<p>
-<h5>Name: </h5>
-<p>{{ name }}<p>
-<h5>Class: </h5>
-<p>{{ class }}<p>
-<h5>Deskripsi: </h2>
-<p>{{ deskripsi }}</p>
+    {% if not park_entries %}
+    <div class="empty-state flex flex-col items-center justify-center h-full">
+      <img src="{% static 'image/sedih-banget.png' %}" alt="No Entries" class="w-50 h-50 mb-1 mx-40" />
+      <p class="empty-message mb-6 text-center" style="color: #080808; font-family: 'Poppins', sans-serif;"> 
+          Belum ada input ParKing! 
+      </p>
+    </div>    
+  
+    {% else %}
+    <div class="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6 w-full">
+      {% for park_entry in park_entries %}
+        {% include 'card_park.html' with park_entry=park_entry %}
+      {% endfor %}
+    {% endif %}
+      </p>
+  </div>
 
-{% if not park_entries %}
-<p>Belum ada data park pada Parking.</p>
-{% else %}
-<table>
-  <tr>
-    <th>Tempat</th>
-    <th>Waktu</th>
-    <th>Harga</th>
-    <th>Ketersediaan</th>
-    <th>Rating</th>
-    <th>Gambar</th>
-  </tr>
+  <div class="text-center mt-16 space-y-4 sm:space-y-0 sm:space-x-4">
+    <a href="{% url 'main:create_park_entry' %}" class="block sm:inline bg-[#6c6c6c] hover:bg-[#080808] text-[#d3d3d3] font-bold py-2 px-6 rounded transition duration-300">Tambah Tempat Parkir</a>
+    <a href="{% url 'main:delete_all_entry' %}" class="block sm:inline bg-[#080808] hover:bg-[#6c6c6c] text-[#d3d3d3] font-bold py-2 px-6 rounded transition duration-300">Hapus Semua Data</a>
+    <a href="{% url 'main:delete_last_entry' %}" class="block sm:inline bg-[#080808] hover:bg-[#6c6c6c] text-[#d3d3d3] font-bold py-2 px-6 rounded transition duration-300">Hapus Data Terakhir</a>
+    <a href="{% url 'main:logout' %}" class="block sm:inline bg-[#6c6c6c] hover:bg-[#080808] text-[#d3d3d3] font-bold py-2 px-6 rounded transition duration-300">Logout</a>
+  </div>
+  
 
-  {% comment %} Berikut cara memperlihatkan data mood di bawah baris ini 
-  {% endcomment %} 
-  {% for park_entry in park_entries %}
-  <tr>
-    <td>{{park_entry.nama}}</td>
-    <td>{{park_entry.time}}</td>
-    <td>{{park_entry.price}}</td>
-    <td>{{park_entry.quantity}}</td>
-    <td>{{park_entry.rating}}</td>
-    <td>{{park_entry.image}}</td>
-  </tr>
-  {% endfor %}
-</table>
-{% endif %}
-
-<br />
-
-<a href="{% url 'main:create_park_entry' %}">
-  <button>Tambah Tempat Parkir</button>
-<a href="{% url 'main:delete_all_entry' %}">
-  <button>Hapus Semua Data</button>
-</a>
-<a href="{% url 'main:delete_last_entry' %}">
-  <button>Hapus Data Terakhir</button>
-</a>
-<a href="{% url 'main:logout' %}">
-  <button>Logout</button>
-</a>
-
-<h5>Sesi terakhir login: {{ last_login }}</h5>
+  <h5 class="text-center mt-12" style="color:#747474;">Sesi terakhir login: {{ last_login }}</h5>
+</div>
+</div>
 {% endblock content %}

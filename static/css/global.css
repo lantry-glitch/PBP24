@@ -1,0 +1,53 @@
+.form-style form input, form textarea, form select {
+    width: 100%;
+    padding: 0.5rem;
+    border: 2px solid #bcbcbc;
+    border-radius: 0.375rem;
+}
+.form-style form input:focus, form textarea:focus, form select:focus {
+    outline: none;
+    border-color: #674ea7;
+    box-shadow: 0 0 0 3px #674ea7;
+}
+@keyframes shine {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+.animate-shine {
+    background: linear-gradient(120deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0.3));
+    background-size: 200% 100%;
+    animation: shine 3s infinite;
+}
+
+.card {
+    border-radius: 8px; /* Lebih menonjolkan sudut */
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  
+  .card:hover {
+    transform: translateY(-5px); /* Efek angkat saat hover */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Bayangan lebih dalam saat hover */
+  }
+
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh; /* Full height to center vertically */
+    background-color: #d3d3d3; /* Background color */
+    text-align: center; /* Center the text */
+}
+
+.empty-image {
+    width: 200px; /* Adjust width as needed */
+    height: auto;
+    margin-bottom: 1rem; /* Adds some space between the image and text */
+}
+
+.empty-message {
+    font-size: 1.2rem;
+    color: #080808;
+    max-width: 400px;
+    text-align: center; /* Ensure text is centered */
+}

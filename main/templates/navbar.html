@@ -1,0 +1,88 @@
+<nav class="bg-[#747474] shadow-lg fixed top-0 left-0 z-40 w-screen">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <!-- Logo -->
+        <a href="{% url 'main:show_main' %}">
+            <div class="flex items-center">
+                <h1 class="text-2xl font-bold text-white">Parking</h1>
+                <i class="material-icons text-2xl font-bold text-white" style="padding-left: 10px;">home</i>
+              </div>
+ 
+        <!-- Desktop Menu -->
+        <div class="hidden md:flex items-center">
+          {% if user.is_authenticated %}
+            <span class="text-[#d3d3d3] mr-4">Welcome, {{ user.username }}</span>
+            <a href="{% url 'main:logout' %}" class="text-center bg-[#080808] hover:bg-[#6c6c6c] text-white font-bold py-2 px-4 rounded transition duration-300">
+              Logout
+            </a>
+          {% else %}
+            <a href="{% url 'main:login' %}" class="text-center bg-[#6c6c6c] hover:bg-[#080808] text-white font-bold py-2 px-4 rounded transition duration-300 mr-2">
+              Login
+            </a>
+            <a href="{% url 'main:register' %}" class="text-center bg-[#6c6c6c] hover:bg-[#080808] text-white font-bold py-2 px-4 rounded transition duration-300">
+              Register
+            </a>
+          {% endif %}
+        </div>
+
+        <!-- Mobile Menu Button (Hamburger) -->
+        <div class="md:hidden flex items-center">
+          <button class="mobile-menu-button" aria-label="Toggle Navigation Menu">
+            <svg class="w-6 h-6 text-white" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+              <path d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Mobile Menu (Hidden by Default) -->
+    <div class="mobile-menu hidden md:hidden px-4 w-full bg-[#747474]">
+      <div class="pt-2 pb-3 space-y-1">
+        {% if user.is_authenticated %}
+          <span class="block text-[#d3d3d3] px-3 py-2">Welcome, {{ user.username }}</span>
+          <a href="{% url 'main:logout' %}" class="block bg-[#080808] hover:bg-[#6c6c6c] text-white font-bold py-2 px-4 rounded transition duration-300">
+            Logout
+          </a>
+        {% else %}
+          <a href="{% url 'main:login' %}" class="block bg-[#6c6c6c] hover:bg-[#080808] text-white font-bold py-2 px-4 rounded transition duration-300 mb-2">
+            Login
+          </a>
+          <a href="{% url 'main:register' %}" class="block bg-[#6c6c6c] hover:bg-[#080808] text-white font-bold py-2 px-4 rounded transition duration-300">
+            Register
+          </a>
+        {% endif %}
+      </div>
+    </div>
+  </nav>
+
+  <!-- JavaScript for Toggling Mobile Menu -->
+  <script>
+    const btn = document.querySelector("button.mobile-menu-button");
+    const menu = document.querySelector(".mobile-menu");
+
+    btn.addEventListener("click", () => {
+      menu.classList.toggle("hidden");
+      menu.classList.toggle("flex");
+      menu.classList.toggle("animate-fade-in-down");
+    });
+  </script>
+
+  <!-- Optional CSS for Smooth Transition -->
+  <style>
+    /* Fade-in animation for mobile menu */
+    @keyframes fade-in-down {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-fade-in-down {
+      animation: fade-in-down 0.3s ease-out;
+    }
+  </style>
