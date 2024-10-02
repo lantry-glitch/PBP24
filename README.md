@@ -3,6 +3,110 @@ website pws: http://allan-kwek-parking.pbp.cs.ui.ac.id/
 untuk jawaban dari beberapa pertanyaan berikut terlampir link gdrive ini
 drive: https://drive.google.com/drive/folders/1QfLorgwBiXcW8TZaz4_31kDszEZMH1G0?usp=drive_link
 
+## Tugas 5
+#### 1. Jika terdapat beberapa CSS selector untuk suatu elemen HTML, jelaskan urutan prioritas pengambilan CSS selector tersebut!
+Urutan prioritas pengambilan CSS selector, juga dikenal sebagai specificity (spesifisitas), adalah sebagai berikut (dari yang tertinggi ke terendah):
+
+1. **Inline Styles**: Gaya yang diterapkan langsung pada elemen HTML menggunakan atribut `style`. (misalnya style="color: blue,") 
+2. **ID Selectors**: Selector yang menggunakan ID elemen (`#id`).
+3. **Class Selectors, Attribute Selectors, dan Pseudo-Classes**: Selector yang menggunakan kelas (`.class`), atribut (`[attribute]`), dan pseudo-classes (`:pseudo-class`).
+4. **Element Selectors dan Pseudo-Elements**: Selector yang menggunakan nama elemen (`element`) dan pseudo-elements (`::pseudo-element`).
+5. **Universal Selector (`*`)**: Selector yang berlaku untuk semua elemen.
+
+Jika ada konflik antara selector dengan spesifisitas yang sama, selector yang ditulis terakhir dalam file CSS akan digunakan.
+
+
+### 2. Mengapa responsive design menjadi konsep yang penting dalam pengembangan aplikasi web? Berikan contoh aplikasi yang sudah dan belum menerapkan responsive design!
+Ya, karena responsive design sangat bermanfaat agar website dapat dikembangkan dan diakses pada berbagai macam jenis devices. Hal ini akan memudahkan kita dalam mengintegrasikan dan menjalankan fungsi yang sama pada satu aplikasi web untuk semua jenis devices.
+
+- Contoh Aplikasi yang Menerapkan Responsive Design
+    - **Amazon**: Situs e-commerce ini menyesuaikan tata letak dan ukuran elemen berdasarkan ukuran layar.
+- Contoh Aplikasi yang Belum Menerapkan Responsive Design
+    - **SiakNG**: Situs ini belum menerapkan responsive design secara sepenuhnya sehingga tulisan masih sulit terbaca oleh pengguna
+  ![Screenshot 2024-10-02 102237](https://github.com/user-attachments/assets/37e71c1f-f465-4597-8238-74106b620768)
+
+### 3. Jelaskan perbedaan antara margin, border, dan padding, serta cara untuk mengimplementasikan ketiga hal tersebut!
+Dalam CSS, margin, border, dan padding adalah tiga properti berbeda yang digunakan untuk mengatur ruang di sekitar elemen.
+1. Margin
+Definisi: margin adalah ruang di luar elemen yang memisahkan elemen dari elemen lain di sekitarnya.
+Ciri: Margin bersifat transparan, tidak memiliki warna, dan tidak memengaruhi ukuran konten elemen.
+contoh:
+```css
+.box {
+    margin: 20px; /* Memberikan jarak 20px di semua sisi elemen */
+}
+```
+2. Border
+Definisi: border adalah garis yang mengelilingi elemen, yang terletak antara padding dan margin.
+Ciri: Border dapat memiliki warna, ketebalan, dan gaya (seperti solid, dashed, dll).
+contoh:
+```css
+.box {
+    border: 2px solid black; /* Border hitam dengan ketebalan 2px */
+}
+```
+3. Padding
+Definisi: padding adalah ruang di dalam elemen yang memisahkan konten dari border.
+Ciri: Padding juga bersifat transparan, tetapi ruangnya berada di dalam elemen, antara konten dan border.
+contoh:
+```css
+.box {
+    padding: 15px; /* Menambahkan ruang 15px di dalam elemen, antara konten dan border */
+}
+```
+
+### 4. Jelaskan konsep flex box dan grid layout beserta kegunaannya!
+
+
+### 5. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial)!
+  1. **1. Mengimplementasi fungsi mengedit dan menghapus produk dengan menambahkan fungsi tersebut pada `views.py`.**
+     Membuat function-function yang berfungsi sebagai logika mengedit dan menghapus objek produk
+     ```pyhton
+     def edit_park(request, id):
+    # Get mood entry berdasarkan id
+    park = Product.objects.get(pk = id)
+
+    # Set mood entry sebagai instance dari form
+    form = ParKingEntryForm(request.POST or None, instance=park)
+
+    if form.is_valid() and request.method == "POST":
+        # Simpan form dan kembali ke halaman awal
+        form.save()
+        return HttpResponseRedirect(reverse('main:show_main'))
+
+    context = {'form': form}
+    return render(request, "edit_park.html", context)
+
+    def delete_park(request, id):
+    # Get mood berdasarkan id
+    park = Product.objects.get(pk = id)
+    # Hapus mood
+    park.delete()
+    # Kembali ke halaman awal
+    return HttpResponseRedirect(reverse('main:show_main'))
+     ```
+
+  2. **Kustomisasi desain pada template HTML yang telah dibuat pada tugas-tugas sebelumnya menggunakan CSS atau CSS framework**
+Sebelum memulai menggunakan Tailwind pada project, kita perlu mengubungkan Tailwind melalui CDN (Content Distribution Network). CDN memungkinkan untuk memakai fitur styling yang disediakan oleh Tailwind tanpa perlu mendownload atau mengkonfigurasi Tailwind pada direktori projek seperti yang sudah dilakukan pada tutorial sebelumnya. Penghubungan ini dilakukan pada `base.html`. Tailwind dipanggil dengan cara:
+```html
+...
+<meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {% block meta %} {% endblock meta %}
+    <script src="https://cdn.tailwindcss.com">
+    </script>
+...
+```
+Setelah menginisiasi Tailwind, ada beberapa component yang dikustomisasi designnya saat mengerjakan tugas ini, misalnya **Login, Register, Tambah Produk, Edit Produk, Daftar Produk, Card Product, dan lain-lain**. Berikut contoh implementasi untuk masing-masing component dapat diakses pada link-link berikut ini:
+- [Login Page](https://github.com/lantry-glitch/PBP24/blob/main/main/templates/login.html)
+- [Register Page](https://github.com/lantry-glitch/PBP24/blob/main/main/templates/register.html)
+- [Create Product](https://github.com/lantry-glitch/PBP24/blob/main/main/templates/create_park_entry.html)
+- [Edit Product](https://github.com/lantry-glitch/PBP24/blob/main/main/templates/edit_park.html)
+- [Tampilan Product](https://github.com/lantry-glitch/PBP24/blob/main/main/templates/main.html)
+- [Card Product](https://github.com/lantry-glitch/PBP24/blob/main/main/templates/card_park.html)
+- [Navigation Bar](https://github.com/lantry-glitch/PBP24/blob/main/main/templates/navbar.html)
+Semua kustomisasi dilakukan menggunakan TailwindCSS dan style dipanggil secara langsung dan inline melalui Tailwind CDN
+
 ## Tugas 4
 #### 1. Perbedaan antara `HttpResponseRedirect()` dan `redirect()`
   `HttpResponseRedirect()` hanya bisa digunakan jika kita ingin melakukan pengalihan manual ke URL tertentu. misalnya
