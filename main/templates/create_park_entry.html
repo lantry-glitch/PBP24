@@ -3,9 +3,9 @@
 {% include 'navbar.html' %}
 
 <div class="container mx-auto py-12 mt-16">
-  <h1 class="text-4xl font-bold text-center mb-6" style="color: #080808; font-family: 'Roboto', sans-serif;">Tambah Data Tempat Parkir</h1>
+  <h1 class="text-4xl font-bold text-center mb-6" style="color: #080808; font-family: 'Orbitron', sans-serif;">Tambah Data Tempat Parkir</h1>
 
-  <form method="POST" enctype="multipart/form-data" class="bg-[#d3d3d3] shadow-lg rounded-lg p-8">
+  <form method="POST" enctype="multipart/form-data" class="bg-[#f3f3f3] shadow-2xl rounded-lg p-8 transition duration-300" style="font-family: 'Space Mono', monospace;">
     {% csrf_token %}
     
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -13,7 +13,7 @@
     </div>
 
     <div class="text-center mt-6">
-      <input type="submit" value="Tambahkan Segera" class="bg-[#6c6c6c] hover:bg-[#080808] text-[#d3d3d3] font-bold py-2 px-6 rounded transition duration-300 cursor-pointer" style="font-family: 'Roboto', sans-serif;" />
+      <input type="submit" value="Tambahkan Segera" class="bg-[#4a4a4a] hover:bg-[#1c1c1c] text-white font-bold py-2 px-6 rounded-lg shadow-md transition-transform duration-300 transform hover:scale-105 cursor-pointer" />
     </div>
   </form>
 </div>

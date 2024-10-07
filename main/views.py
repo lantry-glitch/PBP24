@@ -10,10 +10,12 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
+from django.utils.html import strip_tags
 
 @login_required(login_url='/login')
 def show_main(request):
-    park_entries = Product.objects.filter(user=request.user)
 
     context = {
         'npm' : '2306152134',
@@ -22,7 +24,6 @@ def show_main(request):
         'aplikasi': 'ParKing',
         'slogan': 'Rule Your Parking Experience',
         'deskripsi': 'aplikasi review dan live-update kondisi ketersediaan tempat parkir beserta harganya',
-        'park_entries': park_entries,
         'last_login': request.COOKIES['last_login'],
     }
 
@@ -39,6 +40,25 @@ def create_park_entry(request):
 
     context = {'form': form}
     return render(request, "create_park_entry.html", context)
+
+@csrf_exempt
+@require_POST
+def add_park_entry_ajax(request):
+    nama = strip_tags(request.POST.get("nama"))
+    price = request.POST.get("price")
+    description = strip_tags(request.POST.get("description"))
+    rating = request.POST.get("rating")
+    quantity = request.POST.get("quantity")
+    user = request.user
+
+    new_park = Product(
+        nama=nama, price=price, description=description,
+        rating=rating,quantity=quantity,
+        user=user
+    )
+    new_park.save()
+
+    return HttpResponse(b"CREATED", status=201)
 
 def edit_park(request, id):
     # Get mood entry berdasarkan id
@@ -78,11 +98,11 @@ def delete_park(request, id):
     return HttpResponseRedirect(reverse('main:show_main'))
 
 def show_xml(request):
-    data = Product.objects.all()
+    data = Product.objects.filter(user=request.user)
     return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")
 
 def show_json(request):
-    data = Product.objects.all()
+    data = Product.objects.filter(user=request.user)
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
 
 def show_xml_by_id(request, id):
@@ -117,6 +137,7 @@ def login_user(request):
             return response
 
    else:
+      messages.error(request, "Invalid username or password. Please try again.")
       form = AuthenticationForm(request)
    context = {'form': form}
    return render(request, 'login.html', context)

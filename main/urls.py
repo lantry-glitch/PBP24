@@ -1,5 +1,7 @@
 from django.urls import path
-from main.views import show_main, create_park_entry, show_xml, show_json, show_xml_by_id, show_json_by_id, delete_all_entry, delete_last_entry, register, login_user, logout_user, edit_park, delete_park
+from main.views import show_main, create_park_entry, show_xml, show_json, show_xml_by_id, show_json_by_id, delete_all_entry, delete_last_entry, register, login_user, logout_user, edit_park, delete_park, add_park_entry_ajax
+from django.conf import settings
+from django.conf.urls.static import static
 
 app_name = 'main'
 
@@ -17,4 +19,8 @@ urlpatterns = [
     path('register/', register, name='register'),
     path('login/', login_user, name='login'),
     path('logout/', logout_user, name='logout'),
+    path('create-park-entry-ajax', add_park_entry_ajax, name='add_park_entry_ajax'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
