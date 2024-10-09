@@ -3,6 +3,133 @@ website pws: http://allan-kwek-parking.pbp.cs.ui.ac.id/
 untuk jawaban dari beberapa pertanyaan berikut terlampir link gdrive ini
 drive: https://drive.google.com/drive/folders/1QfLorgwBiXcW8TZaz4_31kDszEZMH1G0?usp=drive_link
 
+## Tugas 6
+#### 1. Jelaskan manfaat dari penggunaan JavaScript dalam pengembangan aplikasi web!
+Berikut adalah manfaat JavaScript
+1. Interaktivitas Tinggi
+JavaScript memungkinkan pengembang untuk menambahkan elemen interaktif pada situs web, seperti dropdown menus, sliders, modals, dan animasi. Pengguna dapat berinteraksi dengan halaman web tanpa perlu me-refresh halaman.
+2. Pengolahan Data di Sisi Klien (Client-Side)
+JavaScript berjalan di browser pengguna, yang berarti banyak operasi bisa dilakukan tanpa harus mengirim data kembali ke server. Ini bisa mengurangi beban server dan meningkatkan kecepatan aplikasi web.
+3. Kompatibilitas Lintas Platform
+JavaScript didukung oleh hampir semua browser modern, sehingga aplikasi web yang menggunakan JavaScript dapat dijalankan di berbagai platform dan perangkat tanpa masalah.
+4. Kaya Akan Library dan Framework
+Terdapat banyak library dan framework populer berbasis JavaScript seperti React, Angular, dan Vue.js yang mempermudah pengembangan aplikasi web yang cepat dan efisien. Library seperti jQuery juga menyederhanakan manipulasi DOM dan event handling.
+5. Dukungan untuk Single Page Applications (SPA)
+JavaScript memungkinkan pembuatan Single Page Applications (SPA), yang memungkinkan pengguna untuk berinteraksi dengan halaman web tanpa perlu me-refresh seluruh halaman. Framework seperti React dan Angular sangat mendukung pembuatan SPA.
+6. Pemrosesan Asinkron
+JavaScript mendukung pemrosesan asinkron melalui AJAX dan Fetch API, yang memungkinkan pengembang untuk mengambil data dari server di latar belakang dan memperbarui konten halaman tanpa memuat ulang.
+7. Ekosistem Node.js
+JavaScript tidak terbatas hanya di browser; dengan Node.js, JavaScript dapat digunakan di sisi server. Ini memungkinkan pengembang menggunakan satu bahasa untuk pengembangan full-stack (baik front-end maupun back-end).
+8. Komunitas dan Dokumentasi yang Besar
+JavaScript memiliki komunitas yang sangat besar dan aktif. Hal ini memudahkan pengembang untuk menemukan solusi, belajar dari tutorial, serta menggunakan dokumentasi yang luas dan terperinci.
+9. Pengembangan Cepat dan Mudah
+Karena sintaks JavaScript yang sederhana dan kemudahan integrasinya dengan HTML dan CSS, pengembang dapat dengan cepat membuat prototipe dan menguji ide dalam waktu singkat.
+10. Real-time Interaction dengan WebSocket
+JavaScript mendukung teknologi real-time seperti WebSocket, yang memungkinkan aplikasi seperti chat dan notifikasi real-time berjalan secara efisien.
+Secara keseluruhan, JavaScript adalah bahasa yang sangat fleksibel dan kuat yang mendukung hampir semua aspek pengembangan aplikasi web modern.
+
+
+#### 2. Jelaskan fungsi dari penggunaan `await` ketika kita menggunakan `fetch()`! Apa yang akan terjadi jika kita tidak menggunakan `await`?
+
+Manfaat Penggunaan `await` dengan `fetch()` ialah:
+
+1. **Kode Asinkron Menjadi Lebih Mudah Dibaca**
+   
+Penggunaan `await` membuat kode asinkron lebih menyerupai kode sinkron. Aliran logika dalam fungsi menjadi lebih mudah diikuti karena kita tidak perlu menangani banyak promises atau menggunakan `.then()` secara berurutan.  
+Contoh:
+```javascript
+const getData = async () => {
+  const response = await fetch('https://api.example.com/data');
+  const data = await response.json();
+  console.log(data);
+};
+```
+Di sini, kode terlihat lebih rapi dan terstruktur, dan kita tidak perlu menumpuk callback.
+
+2. **Menghindari Callback Hell**
+   
+Tanpa `await`, kita akan menggunakan `.then()` untuk menangani promise dari `fetch()`. Ini dapat menyebabkan callback hell jika banyak operasi asinkron yang perlu dilakukan secara berurutan.  
+Contoh tanpa `await`:
+```javascript
+fetch('https://api.example.com/data')
+  .then(response => response.json())
+  .then(data => console.log(data))
+  .catch(error => console.error(error));
+```
+Ini mungkin lebih sulit dibaca dan dipelihara terutama jika ada lebih banyak langkah yang terlibat.
+
+3. **Handling Error dengan Mudah**
+   
+Dengan `await`, error bisa ditangani lebih mudah dengan menggunakan `try...catch`. Ini lebih sederhana daripada harus menangani error di dalam `.then()` atau `.catch()`.  
+Contoh:
+```javascript
+const getData = async () => {
+  try {
+    const response = await fetch('https://api.example.com/data');
+    const data = await response.json();
+    console.log(data);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+};
+```
+
+4. **Pemrosesan Asinkron yang Lebih Alami**
+   
+`await` memastikan bahwa eksekusi program akan berhenti pada titik di mana `await` dipanggil sampai promise tersebut selesai. Ini memberikan pemahaman lebih natural bahwa permintaan asinkron `fetch()` mungkin membutuhkan waktu, sehingga kita tidak berlanjut ke baris kode berikutnya sampai operasi tersebut selesai.
+
+Selain itu, masalah yang muncul bila tidak menggunakan `await` ialah:
+
+1. **Promise Belum Selesai, Kode Dilanjutkan**
+   
+Jika `await` tidak digunakan, kode akan terus berjalan tanpa menunggu `fetch()` selesai. Akibatnya, kode di baris berikutnya mungkin akan dijalankan sebelum hasil dari `fetch()` tersedia.  
+Contoh masalah tanpa `await`:
+```javascript
+const getData = () => {
+  const response = fetch('https://api.example.com/data');
+  console.log(response); // Ini akan mencetak Promise, bukan hasil data
+};
+```
+Di sini, `response` akan mencetak **Promise** alih-alih objek respons yang diinginkan, karena `fetch()` belum selesai saat `console.log` dijalankan.
+
+2. **Munculnya Hasil yang Tidak Diinginkan**
+   
+Jika tidak menggunakan `await` atau penanganan asinkron yang benar, data mungkin belum tersedia saat kita mencoba mengaksesnya, menyebabkan bug atau error seperti **undefined** atau **pending promises**.  
+Contoh:
+```javascript
+const getData = () => {
+  const response = fetch('https://api.example.com/data');
+  const data = response.json(); // Error: response.json is not a function
+};
+```
+Di sini, `response` adalah sebuah **Promise**, jadi kita tidak bisa langsung memanggil `.json()` di atasnya tanpa menunggu **Promise** tersebut terselesaikan.
+
+3. **Kesulitan dalam Penanganan Error**
+   
+Jika tidak menggunakan `await`, error handling menjadi lebih rumit karena kita harus menangani **promise** secara eksplisit dengan `.catch()` untuk menangani kesalahan dalam jaringan atau kegagalan permintaan.
+
+#### 3. Mengapa kita perlu menggunakan decorator csrf_exempt pada view yang akan digunakan untuk AJAX POST?
+`CSRF (Cross-Site Request Forgery)` adalah fitur keamanan di Django yang memastikan bahwa permintaan `POST` berasal dari sumber yang tepercaya. Namun, ketika menggunakan **AJAX POST**, permintaan ini sering kali tidak menyertakan token `CSRF` secara otomatis, yang dapat menyebabkan kegagalan validasi `CSRF`.
+
+Decorator `@csrf_exempt` digunakan untuk **menonaktifkan pemeriksaan CSRF pada view tertentu**. Ini berguna dalam beberapa skenario seperti:
+- **Permintaan dari sumber tepercaya:** Misalnya, ketika permintaan `AJAX` berasal dari bagian aplikasi yang hanya dapat diakses oleh pengguna yang telah diverifikasi.
+- **Mencegah kegagalan permintaan:** Tanpa decorator ini, permintaan `AJAX POST` yang tidak menyertakan token `CSRF` akan ditolak oleh Django.
+
+Namun, penggunaan decorator ini harus dilakukan dengan hati-hati, karena menonaktifkan fitur keamanan penting. Pastikan hanya permintaan yang aman yang dapat mencapai view ini untuk menjaga keamanan aplikasi.
+
+#### 4. Pada tutorial PBP minggu ini, pembersihan data input pengguna dilakukan di belakang (backend) juga. Mengapa hal tersebut tidak dilakukan di frontend saja?
+Pembersihan data input pengguna di backend tetap diperlukan meskipun validasi sudah dilakukan di frontend karena beberapa alasan penting:
+- **Keamanan:** Validasi dan pembersihan data di frontend bisa dilewati oleh pengguna yang memanipulasi request, misalnya dengan memodifikasi query atau menonaktifkan JavaScript. Backend lebih aman karena data diproses secara lebih "tersembunyi" dibandingkan dengan di frontend.
+- **Integritas Data:** Backend bertanggung jawab untuk memastikan bahwa semua data yang masuk memenuhi aturan yang telah ditetapkan. Jika hanya mengandalkan validasi di frontend, data yang tidak valid dapat masuk ke database. Misalnya, jika validasi nama hanya mengizinkan 10 karakter di frontend, ada potensi serangan hacker dengan mengirimkan nama sepanjang 1000 karakter melalui API. Backend dan database dapat menangani masalah ini dengan lebih efektif.
+
+#### 5. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step
+Saya menambahkan fungsi `add_product_entry_ajax()` dalam `views.py` sebagai versi AJAX dari `create_product_entry()` sebelumnya. Fungsi `get_json()` dan `get_xml()` telah dimodifikasi untuk mengembalikan produk yang sesuai dengan user terautentikasi, memungkinkan keduanya digunakan untuk GET AJAX. Kemudian, saya menghubungkan view baru ini dengan menambahkan path pada `urls.py`.
+
+Template `main.html` telah dimodifikasi agar card sekarang ditampilkan secara asinkron dengan AJAX. Selain itu, saya menambahkan modal untuk penambahan produk secara asinkron menggunakan AJAX melalui endpoint yang baru ditentukan. Modal ini memiliki event listener untuk menjalankan AJAX saat di-submit, melakukan POST ke server, dan mendapatkan daftar produk terbaru.
+
+Untuk memastikan keamanan aplikasi dan mencegah XSS, saya menggunakan `strip_tags()` di backend dan `DOMPurify.sanitize()` di frontend. Kedua fungsi ini membersihkan input user dari tag HTML yang tidak diinginkan.
+
+
 ## Tugas 5
 #### 1. Jika terdapat beberapa CSS selector untuk suatu elemen HTML, jelaskan urutan prioritas pengambilan CSS selector tersebut!
 Urutan prioritas pengambilan CSS selector, juga dikenal sebagai specificity (spesifisitas), adalah sebagai berikut (dari yang tertinggi ke terendah):
