@@ -1,5 +1,5 @@
 import datetime
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.urls import reverse
 from django.shortcuts import render, redirect
 from main.forms import ParKingEntryForm
@@ -50,6 +50,9 @@ def add_park_entry_ajax(request):
     rating = request.POST.get("rating")
     quantity = request.POST.get("quantity")
     user = request.user
+
+    if not nama or not price or not description or not rating or not quantity:
+        return JsonResponse({"error": "All fields must be filled"}, status=400)
 
     new_park = Product(
         nama=nama, price=price, description=description,
