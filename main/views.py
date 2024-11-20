@@ -1,4 +1,5 @@
 import datetime
+import json
 from django.http import HttpResponseRedirect, JsonResponse
 from django.urls import reverse
 from django.shortcuts import render, redirect
@@ -150,3 +151,23 @@ def logout_user(request):
     response = HttpResponseRedirect(reverse('main:login'))
     response.delete_cookie('last_login')
     return response
+
+@csrf_exempt
+def create_park_flutter(request):
+    if request.method == 'POST':
+
+        data = json.loads(request.body)
+        new_park = Product.objects.create(
+            user=request.user,
+            nama=data["name"],
+            quantity=int(data["amount"]),
+            price = int(data["amount"]),
+            rating = int(data["amount"]),
+            description=data["description"]
+        )
+
+        new_park.save()
+
+        return JsonResponse({"status": "success"}, status=200)
+    else:
+        return JsonResponse({"status": "error"}, status=401)
